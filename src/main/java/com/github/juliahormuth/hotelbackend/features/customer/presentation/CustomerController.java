@@ -34,8 +34,8 @@ public class CustomerController {
         return this.customerService.findById(id);
     }
 
-    @GetMapping("/{name}")
-    public CustomerModel findByName(@PathVariable String name) {
+    @GetMapping("/name")
+    public CustomerModel findByName(@RequestBody String name) {
         return this.customerService.findByName(name);
     }
 
