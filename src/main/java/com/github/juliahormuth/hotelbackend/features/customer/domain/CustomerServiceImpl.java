@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{

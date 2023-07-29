@@ -28,6 +28,6 @@ public class CustomerModel {
         @Column(name = "document", length = 11)
         private String document;
 
-        @Column(name = "birth", length = 100)
+        @Column(name = "birth")
         private Date birth;
 }
