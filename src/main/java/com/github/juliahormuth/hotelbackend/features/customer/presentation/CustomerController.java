@@ -19,8 +19,8 @@ public class CustomerController {
     private CustomerService customerService;
 
     @PostMapping
-    public CustomerModel createCustomer(@RequestBody CustomerModel customerDto) {
-        return this.customerService.createCustomer(customerDto);
+    public CustomerModel createCustomer(@RequestBody CustomerModel customer) throws Exception {
+        return this.customerService.createCustomer(customer);
     }
 
     @GetMapping()
