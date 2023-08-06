@@ -1,23 +1,29 @@
-package com.github.juliahormuth.hotelbackend.features.customer.domain;
+package com.github.juliahormuth.hotelbackend.features.customer.domain.service;
 
 
 import com.github.juliahormuth.hotelbackend.features.customer.infra.CustomerModel;
 import com.github.juliahormuth.hotelbackend.features.customer.infra.CustomerRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponse;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
-    public CustomerModel createCustomer(CustomerModel customer) {
-       return this.customerRepository.save(customer);
+    public CustomerModel createCustomer(CustomerModel customer) throws Exception {
+        var document = this.customerRepository.findByDocument(customer.getDocument());
+        if (document != null) {
+            throw new Exception("Customer already exists!");
+        }
+        return this.customerRepository.save(customer);
     }
 
     @Override
@@ -31,8 +37,18 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public CustomerModel findByName(String name) {
+    public List<CustomerModel> findByName(String name) {
         return this.customerRepository.findByName(name);
+    }
+
+    @Override
+    public CustomerModel findByDocument(String document) {
+        return this.customerRepository.findByDocument(document);
+    }
+
+    @Override
+    public CustomerModel findByPhone(String phone) {
+        return this.customerRepository.findByPhone(phone);
     }
 
     @Override
@@ -49,7 +65,8 @@ public class CustomerServiceImpl implements CustomerService{
     public CustomerModel updateById(CustomerModel customer) throws Exception {
         var customerExists = this.customerRepository.findById(customer.getId());
         if (customerExists.isPresent()) {
-           return this.customerRepository.save(customer);
+           this.customerRepository.save(customer);
+           return customer;
         } else {
            throw new Exception("Customer not found!");
         }

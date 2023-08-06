@@ -1,31 +1,30 @@
 package com.github.juliahormuth.hotelbackend.features.customer.presentation;
 
-import com.github.juliahormuth.hotelbackend.features.customer.domain.CustomerService;
+import com.github.juliahormuth.hotelbackend.features.customer.domain.service.CustomerService;
 import com.github.juliahormuth.hotelbackend.features.customer.infra.CustomerModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Optional;
 import java.util.UUID;
 
 
 @RestController
 @RequestMapping("/customers")
-public class CustomerController {
 
+
+public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-
     @PostMapping
-    public CustomerModel createCustomer(@RequestBody CustomerModel customer) {
-        return this.customerService.createCustomer(customer);
+    public CustomerModel createCustomer(@RequestBody CustomerModel customerDto) {
+        return this.customerService.createCustomer(customerDto);
     }
 
     @GetMapping()
-    public List<CustomerModel> findAll() {
+    public List<CustomerModel> findAll() throws Exception {
         return this.customerService.findAll();
     }
 
@@ -35,8 +34,18 @@ public class CustomerController {
     }
 
     @GetMapping("/name")
-    public CustomerModel findByName(@RequestBody String name) {
+    public List<CustomerModel> findByName(@RequestParam String name) {
         return this.customerService.findByName(name);
+    }
+
+    @GetMapping("/document")
+    public CustomerModel findByDocument(@RequestParam String document) {
+        return this.customerService.findByDocument(document);
+    }
+
+    @GetMapping("/phone")
+    public CustomerModel findByPhone(@RequestParam String phone) {
+        return this.customerService.findByPhone(phone);
     }
 
     @DeleteMapping("/{id}")

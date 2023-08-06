@@ -18,7 +18,6 @@ public class CustomerModel {
 
         @Id
         @GeneratedValue(generator = "uuid2")
-     //   @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
         @Column(name = "id")
         private UUID id;
 
@@ -27,6 +26,9 @@ public class CustomerModel {
 
         @Column(name = "document", length = 11)
         private String document;
+
+        @Column(name = "phone")
+        private String phone;
 
         @Column(name = "birth")
         private Date birth;
